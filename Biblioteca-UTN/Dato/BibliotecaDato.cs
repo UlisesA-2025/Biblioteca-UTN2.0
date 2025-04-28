@@ -259,8 +259,20 @@ namespace Biblioteca_UTN.Dato
                     string query = " SELECT * FROM Libros";
                     if (id > 0)
                     {
-                        query += $" WHERE Id = @Id";
-                    }
+                        query = $" SELECT " +
+                            $"Libros.Id," +
+                            $"Libros.Nombre," +
+                            $"Autores.Nombre AS autor_nombre," +
+                            $"Editoriales.Nombre AS editorial_nombre," +
+                            $"Generos.Nombre AS genero_nombre," +
+                            $"Ubicaciones.Nombre AS ubi_nombre," +
+                            $"Libros.CantCopias" +
+                            $"FROM Libros" +
+                            $"JOIN Autores ON Libros.IdAutor = Autores.Id" +
+                            $"JOIN Editoriales ON Libros.IdEditorial = Editoriales.Id" +
+                            $"JOIN Generos ON Libros.IdGenero = Generos.Id" +
+                            $"JOIN Ubicaciones ON Libros.IdUbicacion = Ubicaciones.Id";
+                                            }
 
                     con.Open();
                     SqlCommand cmd = new SqlCommand(query, con);
